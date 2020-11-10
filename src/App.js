@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import {useState} from 'react'
+
+import InputUrl from './components/InputUrl';
+import TreeNode from './components/TreeNode';
 import './App.css';
+import {getJson} from './api'
 
 function App() {
+
+  const [firstNode, setFirstNode] = useState(null);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <InputUrl
+        sendRequest={sendRequest}
+      ></InputUrl>
+      {firstNode ? <TreeNode
+        currentNode={firstNode}
+      ></TreeNode> : <div>nothing to display</div>}
     </div>
   );
+
+  function sendRequest(url){
+    getJson(url).then(res => {
+      setFirstNode(res);
+    })
+    .catch(e => {
+      setFirstNode(null);
+    })
+    // let res = getJson();
+    // setFirstNode(res);
+  }
 }
 
 export default App;
