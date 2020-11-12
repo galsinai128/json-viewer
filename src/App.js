@@ -22,7 +22,7 @@ function App() {
 
   function sendRequest(url){
     getJson(url).then(res => {
-      setFirstNode(res);
+      setFirstNode(res.data);
     })
     .catch(e => {
       setFirstNode(null);
